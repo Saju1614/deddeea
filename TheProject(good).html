@@ -1,0 +1,942 @@
+<html>
+<head>
+ 
+    <style>
+        canvas{
+            background: #dddddd;
+        }
+    </style>
+ 
+    <script>
+        // var BinAir = false
+        function victory(PlayerD1,PlayerD2){
+            PlayerD1 = damage1
+            PlayerD2 = damage2
+            if(PlayerD1<0){
+                gameState = "lose"
+                c.fillText ("Player 2 won! Press R to play again",1000,160,600)
+            }
+            if(PlayerD2<0){
+                gameState = "lose"
+                c.fillText ("Player 1 won! Press R to play again",1000,160,600)
+            }
+
+        }
+
+        class platformClass
+            {
+                constructor(pfX, pfY,           // location
+                            pfWidth, pfHeight,  // dimensions
+                            pfImgFile)          // image file name
+                {
+                    // Constructor
+                    // ADD YOUR CODE HERE
+                    this.x = pfX;
+                    this.y = pfY;
+                    
+                    this.width = pfWidth;
+                    this.height = pfHeight;
+                    this.Visible = false
+
+                    this.img = new Image();
+                    this.img.src = "Platform.png";
+                }
+
+                // Draw this platform on the screen
+                draw()
+                {
+                    // ADD YOUR CODE HERE
+                    c.drawImage(this.img, this.x, this.y, this.width, this.height);
+                }
+            }
+
+            //initialize platform objects
+            var pf1 = new platformClass(150, 580, 320, 200, "Platform.png");
+            var pf2 = new platformClass(1150, 500, 320, 200, "Platform.png");
+            // var pf3 = new platformClass(550, 150, 100, 25, "Platform.png");
+
+        class ClassPlayer1{
+            constructor(){
+                // CONSTRUCTOR CODE
+                this.x = 600;
+                this.y = 788;
+                this.width = 50;
+                this.height = 50;
+ 
+                this.img = new Image();
+                this.img.src = "Teach.jpg";
+                this.bInAir = false;
+                    this.curYspeed = 0;  
+                    this.direction = "left"
+ 
+            }
+            intersects(obj){
+                    if (this.x < obj.x + obj.width &&
+                        this.x + this.width > obj.x &&
+                        this.y < obj.y + obj.height &&
+                        this.y + this.height > obj.y)
+                    {
+                        return true;
+                    }
+                    else
+                    {
+                        return false;
+                    }
+                }
+            moveLeft1(){
+                this.x-=20
+                this.direction = "left"
+            }
+
+            moveRight1(){
+                this.x+=20
+                this.direction = "right"
+            }
+
+            moveUp1(){
+                if (this.bInAir == false)
+                    {
+                        this.bInAir = true;
+                        this.curYspeed = -20;
+                    }
+                    
+            }
+
+            moveDown1(){
+             this.height -= 20
+             this.width -=20
+            }
+
+            update()
+                {
+
+                    // If the bird is currently in the air (i.e. mid-jump), then update its
+                    // location and current vertical speed
+                    if (this.bInAir == true)
+                    {
+                        this.y += this.curYspeed;
+                        this.curYspeed++;
+
+                        // Check if we landed on the ground
+                        if (this.y > 788)
+                        {
+                            this.y = 788;
+                            this.bInAir = false;
+                        }
+
+                        //if the bird has reached the apex (top) of its jump and has started
+                        //to fall back to the ground
+                        //      This means that the y-value is turning to positive
+                        //      and the bird intersects the platforms
+                        if(this.curYspeed > 0 && this.intersects(pf1))
+                        {
+                            //set the current y-speed to 0, meaning we aren't jumping or falling
+                            this.curYspeed = 0;
+
+                            //the bird is no longer in the air
+                            this.bInAir = false;
+
+                            //set the position of the bird so that it is on the
+                            //top of the platform
+                            this.y = pf1.y - this.height + 2;
+                        }
+                        //if the bird intersects any of the platforms
+                        else if(this.curYspeed > 0 && this.intersects(pf2))
+                        {
+                            //set the current y-speed to 0, meaning we aren't jumping or falling
+                            this.curYspeed = 0;
+
+                            //the bird is no longer in the air
+                            this.bInAir = false;
+
+                            //set the position of the bird so that it is on the
+                            //top of the platform
+                            //      +2 is a buffer for the bird and platform. It moves
+                            //      the bird down so that it looks "better" on the platform
+                            this.y = pf2.y - this.height + 2;
+                        }
+                        //we would copy and paste this "else if" code for more platforms
+                        //or create a loop if we had an array of platforms
+                    }
+                    else
+                    {
+                        //if the bird is not in mid-jump but still in the air (meaning it was
+                        // on a platform), then we have to see if the bird has fallen
+                        //off of the platform
+                        if(this.y < 700 && 
+                            this.intersects(pf1) == false &&
+                            this.intersects(pf2) == false)
+                        {
+                            //the bird must still be in the air
+                            this.bInAir = true;
+                        }
+                    }
+                }
+
+
+
+             
+            draw(){
+                c.drawImage(this.img, this.x, this.y, this.width, this.height);
+            }
+        }
+        var Player1 = new ClassPlayer1();
+
+        class ClassPlayer1Hitbox{
+            constructor(){
+                // CONSTRUCTOR CODE
+                this.x = Player1.x;
+                this.y = Player1.y;
+                this.width = 50;
+                this.height = 50;
+                this.bVisible = false
+                this.img = new Image();
+                this.img.src = "left.png";
+                this.bInAir = true;
+            }
+            intersects(obj){
+                    if (this.x < obj.x + obj.width &&
+                        this.x + this.width > obj.x &&
+                        this.y < obj.y + obj.height &&
+                        this.y + this.height > obj.y)
+                    {
+                        return true;
+                    }
+                    else
+                    {
+                        return false;
+                    }
+                }
+                
+               update(){
+            //     if(this.intersects(Player1)){
+            //     this.bVisible = false;
+            //     for (let i = 0; i < 1; i++) {
+            //         damage1=damage1-1
+            //     }
+                
+            //     // Player1.x-=damage1 
+            //     //* 0.101001
+            // }
+            console.log("HI")
+               } 
+               draw()
+                {
+                    // ADD YOUR CODE HERE
+                    c.drawImage(this.img, this.x, this.y, this.width, this.height);
+                }
+        }
+        
+        var Player1Hitbox = new ClassPlayer1Hitbox();
+        
+
+        class pebbleClass{
+            constructor(rollX, rollY){
+                // CONSTRUCTOR CODE
+                this.x = rollX;
+                this.y = rollY;
+                this.width = 30;
+                this.height = 30;
+                this.img = new Image();
+                this.img.src = "Jeff.png";
+                this.bVisible = false;
+            }
+ 
+            intersects(obj){
+                if (this.x < obj.x + obj.width &&
+                    this.x + this.width > obj.x &&
+                    this.y < obj.y + obj.height &&
+                    this.y + this.height > obj.y){
+                    return true;
+                }
+                else{
+                        return false;
+                    }
+            }
+ 
+ 
+            // If this pebble is visible, then move it to the right.
+            // If the pebble goes off the screen, mark it invisible.
+        update(){
+            if(Player2.direction=="left"){
+                if (this.bVisible == true){
+                    this.x -= 10;
+                    if (this.x < -250){
+                        this.bVisible = false;
+                    }
+                }
+            }
+            if(Player2.direction=="right"){
+                if (this.bVisible == true){
+                    this.x += 10;
+                    if (this.x > 1660){
+                        this.bVisible = false;
+                    }
+                }
+            }
+
+            if(Player2.bInAir== true){
+                if (this.bVisible == true){
+                    this.y -= 10;
+                    if (this.y < -20){
+                        this.bVisible = false;
+                    }
+                }
+            }
+
+            if(this.intersects(Player1)){
+                this.bVisible = false;
+                for (let i = 0; i < 1; i++) {
+                    damage1=damage1-1
+                }
+                
+                // Player1.x-=damage1 
+                //* 0.101001
+            }
+        }
+   
+ 
+// If this pebble is visible, then draw it on the screen.
+    draw(){
+        if (this.bVisible == true){
+            c.drawImage(this.img, this.x, this.y, this.width, this.height);
+        }
+    }
+}
+        class ClassPlayer2{
+            constructor(){
+                // CONSTRUCTOR CODE
+                this.x = 900;
+                this.y = 788;
+                this.width = 50;
+                this.height = 50;
+                this.direction = "left"
+                this.img = new Image();
+                this.img.src = "Suvir.jpg";
+                this.bInAir = false;
+                this.crouching = false
+                this.curYspeed = 0;    
+ 
+            }
+
+            intersects(obj){
+                    if (this.x < obj.x + obj.width &&
+                        this.x + this.width > obj.x &&
+                        this.y < obj.y + obj.height &&
+                        this.y + this.height > obj.y)
+                    {
+                        return true;
+                    }
+                    else
+                    {
+                        return false;
+                    }
+                }
+
+            moveLeft2(){
+                this.direction = "left"
+                this.x-=20
+            }
+
+            moveRight2(){
+                this.direction = "right"
+                this.x+=20
+            }
+
+            moveUp2(){
+                if (this.bInAir == false)
+                    {
+                        this.bInAir = true;
+                        this.curYspeed = -20;
+                    }
+            }
+
+            moveDown2(){
+             this.crouching = true
+             this.y = 835
+            }
+
+            update()
+                {
+
+                    // If the bird is currently in the air (i.e. mid-jump), then update its
+                    // location and current vertical speed
+                    if (this.bInAir == true)
+                    {
+                        this.y += this.curYspeed;
+                        this.curYspeed++;
+
+                        // Check if we landed on the ground
+                        if (this.y > 788)
+                        {
+                            this.y = 788;
+                            this.bInAir = false;
+                        }
+
+                        //if the bird has reached the apex (top) of its jump and has started
+                        //to fall back to the ground
+                        //      This means that the y-value is turning to positive
+                        //      and the bird intersects the platforms
+                        if(this.curYspeed > 0 && this.intersects(pf1))
+                        {
+                            //set the current y-speed to 0, meaning we aren't jumping or falling
+                            this.curYspeed = 0;
+
+                            //the bird is no longer in the air
+                            this.bInAir = false;
+
+                            //set the position of the bird so that it is on the
+                            //top of the platform
+                            this.y = pf1.y - this.height + 2;
+                        }
+                        //if the bird intersects any of the platforms
+                        else if(this.curYspeed > 0 && this.intersects(pf2))
+                        {
+                            //set the current y-speed to 0, meaning we aren't jumping or falling
+                            this.curYspeed = 0;
+
+                            //the bird is no longer in the air
+                            this.bInAir = false;
+
+                            //set the position of the bird so that it is on the
+                            //top of the platform
+                            //      +2 is a buffer for the bird and platform. It moves
+                            //      the bird down so that it looks "better" on the platform
+                            this.y = pf2.y - this.height + 2;
+                        }
+                        //we would copy and paste this "else if" code for more platforms
+                        //or create a loop if we had an array of platforms
+                    }
+                    else
+                    {
+                        //if the bird is not in mid-jump jbut still in the air (meaning it was
+                        // on a platform), then we have to see if the bird has fallen
+                        //off of the platform
+                        if(this.y < 700 && 
+                            this.intersects(pf1) == false &&
+                            this.intersects(pf2) == false)
+                        {
+                            //the bird must still be in the air
+                            this.bInAir = true;
+                        }
+                    }
+                }
+
+
+
+
+
+             
+            draw(){
+                c.drawImage(this.img, this.x, this.y, this.width, this.height);
+            }
+        }
+        var Player2 = new ClassPlayer2();
+
+        class ShieldClass{
+             constructor(ShieldX,ShieldY){
+                 // CONSTRUCTOR CODE
+                 this.x = Player2.x;
+                 this.y =  Player2.y-50;
+                 this.width = 80;
+                 this.height = 40;
+                 this.bVisible = true
+
+
+                 this.img = new Image();
+                 this.img.src = "ShieldUp.png";
+ 
+                 }
+
+
+            intersects(obj){
+                if (this.x < obj.x + obj.width &&
+                    this.x + this.width > obj.x &&
+                    this.y < obj.y + obj.height &&
+                    this.y + this.height > obj.y)
+                {
+                    return true;
+                }
+                else{
+                    return false;
+                }
+            }
+
+            update(){
+                // if (this.intersects(Player1)){
+                //     Player1.y -=20
+                // }
+                    console.log("HI")
+            }
+
+
+            moveL(){
+                this.bVisible = true
+                this.x = Player2.x-50
+                this.y = Player2.y
+                if (this.intersects(Player1)){
+                    Player1.x -=10
+                    damage1-=2.5
+                }
+
+
+            }
+
+
+            moveR(){
+                this.bVisible = true
+            this.x = Player2.x+50
+                this.y = Player2.y
+                if (this.intersects(Player1)){
+                    Player1.x +=20
+                    damage1-=2.5
+                }
+
+
+            }
+
+
+            moveU(){
+                this.bVisible = true
+                this.x = Player2.x;
+                this.y =  Player2.y-50;
+                if (this.intersects(Player1)){
+                    Player1.y +=200
+                    damage1-=2.5
+                }
+
+
+                }
+
+                moveD(){
+                    this.bVisible = false
+
+
+                }
+           
+ 
+            draw(){
+                c.drawImage(this.img, this.x, this.y, this.width, this.height);
+            }
+        }
+        var Shield = new ShieldClass();
+
+        class pebbleClass2{
+            constructor(rollX, rollY){
+                // CONSTRUCTOR CODE
+                this.x = rollX;
+                this.y = rollY;
+                this.width = 30;
+                this.height = 30;
+                this.img = new Image();
+                this.img.src = "F.png";
+                this.bVisible = false;
+            }
+ 
+            intersects(obj){
+                if (this.x < obj.x + obj.width &&
+                    this.x + this.width > obj.x &&
+                    this.y < obj.y + obj.height &&
+                    this.y + this.height > obj.y){
+                    return true;
+                }
+                else{
+                        return false;
+                    }
+            }
+ 
+ 
+            // If this pebble is visible, then move it to the right.
+            // If the pebble goes off the screen, mark it invisible.
+        update(){
+            if(this.intersects(Shield))
+                {
+                    this.bVisible = false;
+                }
+
+            if(Player1.direction=="left"){
+                if (this.bVisible == true){
+                    this.x -= 10;
+                    if (this.x < -250){
+                        this.bVisible = false;
+                    }
+                }
+            }
+
+            if(this.intersects(Player2)){
+                this.bVisible = false;
+                for (let i = 0; i < 1; i++) {
+                    damage2=damage2-1
+                }
+                
+                // Player1.x-=damage1 
+                //* 0.101001
+            }
+        }
+   
+ 
+// If this pebble is visible, then draw it on the screen.
+    draw(){
+        if (this.bVisible == true){
+            c.drawImage(this.img, this.x, this.y, this.width, this.height);
+        }
+    }
+}
+
+        
+       
+        var gameState = "intro";
+        var c
+
+        var damage1 = 300
+        var damage2 = 300
+        
+        var bulletsGone = 0
+        var bullets = []
+
+        var bulletsGone2 = 0
+        var bullets2 = []
+
+        for (let i = 0; i < 5; i++) {
+            bullets[i] = new pebbleClass(0,0)
+        }
+
+        for (let i = 0; i < 5; i++) {
+            bullets2[i] = new pebbleClass2(0,0)
+        }
+
+        // Canvas width and height.
+        var cWidth, cHeight;
+
+ 
+        // Stores the current keyboard state
+        var curkeys = [];
+       
+        // Stores keys that have been newly pressed since last update
+        var newkeys = [];
+
+        
+ 
+ 
+        // Initializes entire game framework. This method should only be called
+        // once, by the body onload event handler.
+        function gameFrameworkInit(){  
+               
+            // Initialize key arrays
+            for (i = 0; i < 256; i++){
+                curkeys[i] = false;
+                newkeys[i] = false;
+            }
+       
+            // Initialize global variables for canvas
+            c = myCanvas.getContext('2d');
+            cWidth = myCanvas.width;
+            cHeight = myCanvas.height;
+ 
+ 
+            // Start listeners for getting keyboard state
+            window.addEventListener('keydown',
+                                     function(e){
+                                        if (!curkeys[e.keyCode]){
+                                            curkeys[e.keyCode] = true;
+                                            newkeys[e.keyCode] = true;
+                                        }
+                                     }
+                                   );
+           
+            window.addEventListener('keyup',
+                                     function(e){ curkeys[e.keyCode] = false; }
+                                   );
+ 
+            // Schedule the update function to be called right before the next repaint.
+            // (At the end of the update function, it will schedule itself to be called
+            // again before the NEXT repaint, and so on.
+            window.requestAnimationFrame(gameUpdate);
+        }
+       
+       
+       
+ 
+ 
+        
+ 
+        function gameUpdate(){
+            if(gameState == "play"){
+                victory()
+
+            for(var i = 0; i<5; i++){
+                bullets[i].update()
+            }
+            for(var i = 0; i<1; i++){
+                bullets2[i].update()
+            }
+            // console.log(Player2.crouching)
+            // // console.log(Player1.bInAir)
+            // console.log("his y axis==>"+Player2.y)
+            // console.log("his x axis==>"+Player2.x)
+            // console.log(bullets[i].bVisible)
+            // console.log("his x axis==>"+Player1.x)
+            //console.log(Player1Hitbox.x)
+
+            if(curkeys[[65]]){
+                Player1.moveLeft1()
+                }
+            
+            if(curkeys[[74]]){
+            Player2.moveLeft2()
+            Shield.moveL()
+            Shield.img.src = "sheildLeft.png";
+            }
+
+            if(curkeys[[76]]){
+            Player2.moveRight2()
+            Shield.moveR()
+            Shield.img.src = "ShieldRight.png";
+            }
+
+            if(curkeys[[73]]){
+            Player2.moveUp2()
+            Shield.moveU()
+            Shield.img.src = "ShieldUp.png";
+            }
+
+            if(curkeys[[75]]){
+            Player2.moveDown2()
+            Shield.moveD()
+            }
+            if(curkeys[[75]]!=true){
+            Player2.height = 50
+            }
+
+            if(Player2.crouching == false){
+                Player2.y = 788
+            }
+            if(Player2.crouching == true){
+                damage2 -= 1
+            }
+            if(Player2.y <= 788){
+                Player2.crouching = false
+            }
+
+            // if(Player1Hitbox.bVisible == true){
+            //     Player1Hitbox.x = Player1.x
+            //     Player1Hitbox.y = Player1.y
+            // }
+
+ 
+            if(curkeys[[68]]){
+                Player1.moveRight1()
+
+            }
+            if (newkeys[87])
+            {
+                Player1.moveUp1();
+            }
+
+
+
+            
+
+
+                if (newkeys[80]){       // ENTER
+                    if(Player2.direction=="left"){
+                    //code for using the array of pebbles
+                    for(var i = 0; i<5; i++){
+                        //only allow pebbles to be fired if visible
+                        if(bullets[bulletsGone].bVisible == false){
+                            bullets[bulletsGone].x = Player2.x - 40;
+                            bullets[bulletsGone].y = Player2.y +30;
+                            bullets[bulletsGone].bVisible = true;
+                        
+                        }
+                    }
+                bulletsGone++
+                }
+                else{
+                     for(var i = 0; i<5; i++){
+                        //only allow pebbles to be fired if visible
+                        if(bullets[bulletsGone].bVisible == false){
+                            bullets[bulletsGone].x = Player2.x + 40;
+                            bullets[bulletsGone].y = Player2.y +30;
+                        bullets[bulletsGone].bVisible = true; 
+                     }
+                }
+                bulletsGone++
+                }
+                
+                
+            }
+
+            
+
+            if (newkeys[80]&&newkeys[73]){  
+                for(var i = 0; i<5; i++){
+                        //only allow pebbles to be fired if visible
+                        if(bullets[bulletsGone].bVisible == false){
+                            bullets[bulletsGone].x = Player2.x + 80;
+                            bullets[bulletsGone].y = Player2.y +30;
+                            bullets[bulletsGone].bVisible = true;
+                        
+                        }
+                    }
+                bulletsGone++
+            }
+
+            if(bulletsGone==5){
+                bulletsGone = 0
+            }
+
+            if (newkeys[82]){       // ENTER
+                    if(Player1.direction=="left"){
+                    //code for using the array of pebbles
+                    for(var i = 0; i<5; i++){
+                        //only allow pebbles to be fired if visible
+                        if(bullets2[bulletsGone2].bVisible == false){
+                            bullets2[bulletsGone2].x = Player1.x - 40;
+                            bullets2[bulletsGone2].y = Player1.y +30;
+                            bullets2[bulletsGone2].bVisible = true;
+                        
+                        }
+                    }
+                    bulletsGone2++
+                }
+                if(Player1.direction=="right"){
+                    // Player1Hitbox.bVisible = true
+                    if(Player1.intersects(Player2)){
+                    for (let i = 0; i < 1; i++) {
+                        damage2=damage2-1
+                    }
+                }
+            }
+        }
+        if(newkeys[82]&&Player1.bInAir==true||Player1.bInAir==false){
+            if(newkeys[69]){
+               Player1Hitbox.x =Player1.x
+                Player1Hitbox.y =Player1.y 
+            }
+                
+        }
+        if(newkeys[82]&&Player1.bInAir==true||Player1.bInAir==false){
+            if(newkeys[84]){
+                let OldareaX = Player1.x
+                let OldareaY = Player1.y
+                let oldetAreaX = Player1Hitbox.x
+                let oldetAreaY = Player1Hitbox.y
+                Player1Hitbox.x =OldareaX
+                Player1Hitbox.y =OldareaY
+                Player1.x =oldetAreaX
+                Player1.y =oldetAreaY
+
+            }
+                
+        }
+
+            if(bulletsGone2==1){
+                bulletsGone2 = 0
+            }
+
+
+        //   if(Player1.bInAir==false&& Player1.y ==788){
+        //       if(curkeys[[87]]){
+                
+        //         Player1.moveUp1()
+        //         Player1.bInAir = true
+        //     }
+        //   }
+        //   if(Player1.bInAir==true && Player1.y <=788){
+        //     Player1.y +=5
+        //   }
+          
+        //   if(Player1.bInAir==true && Player1.y ==788){
+        //     Player1.bInAir=false
+        //   }
+
+
+
+
+            
+
+
+
+           
+ 
+        
+            
+            Player1Hitbox.update()
+            Player1.update()
+            Player2.update()
+            Shield.update()
+            }
+            // DO NOT ADD OR MODIFY ANY CODE BELOW HERE
+            // Reset newkeys
+            for (i = 0; i < 256; i++){
+                newkeys[i] = false;
+            }
+           
+            // At the end of the update function, repaint the screen
+            gameDraw();
+               
+            // Last thing the update function does is to schedule itself to be called
+            // again before the next repaint
+            window.requestAnimationFrame(gameUpdate);
+        }
+ 
+ 
+        function gameDraw(){
+            var bg = new Image();
+            bg.src = "background.png";
+            c.font = "30px Arial"
+
+            // Clear the canvas before we draw the current frame
+            c.clearRect(0,0,cWidth,cHeight);
+ 
+            c.drawImage(bg, -1200, -1240, 4000, 4000);
+            
+
+            c.fillText ("Player2: "+damage2,1425,25,600)
+            c.fillText ("Player1: "+damage1,10,25,600)
+
+            for(var i = 0; i<5; i++){
+                bullets[i].draw()
+            }
+
+            for(var i = 0; i<1; i++){
+                bullets2[i].draw()
+            }
+
+            if(gameState == "intro"){
+                console.log(gameState)
+                c.fillText ("Hi Isha",1000,30,600)
+                if(curkeys[[13]]){
+                gameState="play"
+                }
+            }
+            if(gameState == "lose"){
+                if(curkeys[[82]]){
+                gameState="intro"
+                location.reload();
+                }
+            }
+
+            pf1.draw();
+            pf2.draw();
+            Player1Hitbox.draw()
+            Player1.draw()
+            Player2.draw()
+            Shield.draw()
+        }
+
+        
+    </script>
+ 
+</head>
+ 
+ 
+<body onload="gameFrameworkInit()">
+   
+    <canvas id="myCanvas" width="1600" height="900"></canvas>
+ 
+</body>
+ 
+ 
+</html>

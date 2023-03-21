@@ -1,0 +1,1596 @@
+<html>
+<head>
+ 
+    <style>
+        canvas{
+            background: #dddddd;
+        }
+    </style>
+ 
+    <script>
+        function bored(){
+            
+        }
+       
+        class MRCSClass{
+            constructor(){
+                // CONSTRUCTOR CODE
+                this.x = 750;
+                this.y = 750;
+                this.width = 100;
+                this.height = 100;
+ 
+                this.img = new Image();
+                this.img.src = "document.png";
+ 
+            }
+            draw(){
+                c.drawImage(this.img, this.x, this.y, this.width, this.height);
+            }
+            moveLeft(){
+           
+            this.x-=10
+ 
+        }
+ 
+        moveRight(){
+           
+            this.x+=10;
+ 
+        }
+        }
+        var MR = new MRCSClass();
+ 
+        class RickClass{
+            constructor(){
+                // CONSTRUCTOR CODE
+                this.x = 600;
+                this.y = 120;
+                this.width = 400;
+                this.height = 400;
+ 
+                this.img = new Image();
+                this.img.src = "HappyRick.png";
+ 
+                this.direction = "right"
+ 
+            }
+            move(){
+                //
+                // ADD YOUR MOVEMENT CODE HERE
+               
+                //
+                //if the car is moving rithhgu
+               
+                if(this.direction == "right"){
+                    this.x+=10
+ 
+                    if(this.x + this.width>=cWidth){
+                        this.direction = "left"
+                    }
+                }
+                else{
+                   
+                        this.x-=10
+                        if(this.x<=0){
+                            this.direction="right"
+                        }
+                                        }
+               
+                //
+                // ADD YOUR WRAP LOGIC HERE
+                //
+            }
+ 
+            draw(){
+                c.drawImage(this.img, this.x, this.y, this.width, this.height);
+            }
+        }
+        var Rick = new RickClass();
+ 
+    class pebbleClass2{
+                constructor(rollX, rollY){
+                   
+    // CONSTRUCTOR CODE
+    this.x = rollX;
+    this.y = rollY;
+    this.width = 30;
+    this.height = 30;
+    this.img = new Image();
+    this.img.src = "rickroll-rick.gif";
+    this.bVisible = false;
+}
+ 
+intersects(obj){
+                if (this.x < obj.x + obj.width &&
+                    this.x + this.width > obj.x &&
+                    this.y < obj.y + obj.height &&
+                    this.y + this.height > obj.y)
+                {
+                    return true;
+                }
+                else{
+                    return false;
+                }
+            }
+ 
+// If this pebble is visible, then move it to the right.
+// If the pebble goes off the screen, mark it invisible.
+update(){
+
+
+    if(this.intersects(MR))
+                {
+                    this.bVisible = false;
+                   
+                    //reset the position of the pebble
+                    //if we do not, and use a timer to bring the pig back,
+                    //the pebble is still where the pig is located
+                    this.x = Alvin.x + Alvin.width;
+                    this.y = Alvin.y + Alvin.height/2;
+
+
+                    this.x = Jess.x + Jess.width;
+                    this.y = Jess.y + Jess.height/2;
+                    lives -=10
+                    console.log(lives)
+                }
+
+
+                if(this.intersects(Shied))
+                {
+                    this.bVisible = false;
+                   
+                    //reset the position of the pebble
+                    //if we do not, and use a timer to bring the pig back,
+                    //the pebble is still where the pig is located
+                    this.x = Alvin.x + Alvin.width;
+                    this.y = Alvin.y + Alvin.height/2;
+
+
+                    this.x = Jess.x + Jess.width;
+                    this.y = Jess.y + Jess.height/2;
+                }
+               
+
+
+    if(Alvin.direction == "left"){
+                if (this.bVisible == true){
+            this.y += 10;
+            if (this.y > 800){
+                this.bVisible = false;
+            }
+        }
+    }
+ 
+    if(Alvin.direction == "down"){
+                if (this.bVisible == true){
+            this.x += 10;
+            if (this.x > 800){
+                this.bVisible = false;
+            }
+        }
+    }
+ 
+    if(Alvin.direction == "up"){
+                if (this.bVisible == true){
+            this.x -= 10;
+            if (this.x < 0){
+                this.bVisible = false;
+            }
+        }
+    }
+ 
+    if(Alvin.direction == "right"){
+                if (this.bVisible == true){
+            this.y -= 10;
+            if (this.y < 0){
+                this.bVisible = false;
+            }
+        }
+    }
+ 
+    if(Jess.direction == "left"){
+                if (this.bVisible == true){
+            this.y += 10;
+            if (this.y > 800){
+                this.bVisible = false;
+            }
+        }
+    }
+ 
+    if(Jess.direction == "down"){
+                if (this.bVisible == true){
+            this.x += 10;
+            if (this.x > 800){
+                this.bVisible = false;
+            }
+        }
+    }
+ 
+    if(Jess.direction == "up"){
+                if (this.bVisible == true){
+            this.x -= 10;
+            if (this.x < 0){
+                this.bVisible = false;
+            }
+        }
+    }
+ 
+    if(Jess.direction == "right"){
+                if (this.bVisible == true){
+            this.y -= 10;
+            if (this.y < 0){
+                this.bVisible = false;
+            }
+        }
+    }
+ 
+}
+   
+ 
+// If this pebble is visible, then draw it on the screen.
+draw(){
+    if (this.bVisible == true){
+        c.drawImage(this.img, this.x, this.y, this.width, this.height);
+    }
+}
+}
+ 
+class pebbleClass{
+                constructor(rollX, rollY){
+    // CONSTRUCTOR CODE
+    this.x = rollX;
+    this.y = rollY;
+    this.width = 30;
+    this.height = 30;
+    this.img = new Image();
+    this.img.src = "GUN.jpg";
+    this.bVisible = false;
+}
+ 
+intersects(obj){
+                if (this.x < obj.x + obj.width &&
+                    this.x + this.width > obj.x &&
+                    this.y < obj.y + obj.height &&
+                    this.y + this.height > obj.y)
+                {
+                    return true;
+                }
+                else{
+                    return false;
+                }
+            }
+ 
+ 
+// If this pebble is visible, then move it to the right.
+// If the pebble goes off the screen, mark it invisible.
+update(){
+    //moves the bullet
+    if (this.bVisible == true){
+        sndCymbal.play()
+        this.y -= 10;
+        if (this.y < -10){
+            this.bVisible = false;
+            console.log(this.y)
+        }
+    }
+   
+    if(this.intersects(Rick))
+                {
+                    this.bVisible = false;
+                   
+                    //reset the position of the pebble
+                    //if we do not, and use a timer to bring the pig back,
+                    //the pebble is still where the pig is located
+                    this.x = MR.x + MR.width;
+                    this.y = MR.y + MR.height/2;
+
+
+                    Kate.play()
+
+
+                    Rick.y-=5
+                }
+   
+}
+   
+ 
+// If this pebble is visible, then draw it on the screen.
+draw(){
+    if (this.bVisible == true){
+        c.drawImage(this.img, this.x, this.y, this.width, this.height);
+    }
+}
+}
+ 
+class AlvinClass{
+            constructor(){
+                // CONSTRUCTOR CODE
+                this.x = 600;
+                this.y = 0;
+                this.width = 40;
+                this.height = 40;
+ 
+                this.img = new Image();
+                this.img.src = "Me.jpg";
+ 
+                this.direction = "left"
+ 
+            }
+            move(){
+                //
+                // ADD YOUR MOVEMENT CODE HERE
+               
+                //
+                //if the car is moving rithhgu
+               
+                if(this.direction == "left"){
+                    this.x-=10
+           
+                }
+                else if(this.direction == "down"){
+                    this.y+=10
+                }
+                else if(this.direction == "up"){
+                    this.y-=10
+                }
+                else{
+                    this.x+=10
+                }
+                if(this.x == 0 && this.direction == "left"){
+                    this.direction = "down"
+                }
+                if(this.y == 860 && this.direction == "down"){
+                    this.direction = "right"    
+                }
+ 
+                if(this.x == 1560 && this.direction == "right"){
+                    this.direction = "up"  
+                }
+ 
+                if(this.y == 0 && this.direction == "up"){
+                    this.direction = "left"
+                }
+                // if(this.direction == "left"){
+                //     this.x-=10
+           
+                // }
+                // else if(this.direction == "down"){
+                //     this.y+=10
+                // }
+                // else if(this.direction == "up"){
+                //     this.y-=10
+                // }
+                // else{
+                //     this.x+=10
+                // }
+                // if(this.x == 0 && this.direction == "left"){
+                //     this.direction = "down"
+                // }
+                // if(this.y == 860 && this.direction == "down"){
+                //     this.direction = "right"    
+                // }
+ 
+                // if(this.x == 1560 && this.direction == "right"){
+                //     this.direction = "up"  
+                // }
+ 
+                // if(this.y == 0 && this.direction == "up"){
+                //     this.direction = "left"
+                // }
+                // console.log(this.y)
+                // console.log(this.x)
+ 
+               
+                //
+                // ADD YOUR WRAP LOGIC HERE
+                //
+            }
+ 
+            draw(){
+                c.drawImage(this.img, this.x, this.y, this.width, this.height);
+            }
+        }
+        var Alvin = new AlvinClass();
+ 
+        class JessClass{
+            constructor(){
+                // CONSTRUCTOR CODE
+                this.x = 600;
+                this.y = 0;
+                this.width = 40;
+                this.height = 40;
+ 
+                this.img = new Image();
+                this.img.src = "AHHH.jpg";
+ 
+                this.direction = "left"
+ 
+            }
+            move(){
+                //
+                // ADD YOUR MOVEMENT CODE HERE
+               
+                //
+                //if the car is moving rithhgu
+               
+                if(this.direction == "left"){
+                    this.x-=20
+           
+                }
+                else if(this.direction == "down"){
+                    this.y+=20
+                }
+                else if(this.direction == "up"){
+                    this.y-=20
+                }
+                else{
+                    this.x+=20
+                }
+                if(this.x == 0 && this.direction == "left"){
+                    this.direction = "down"
+                }
+                if(this.y == 860 && this.direction == "down"){
+                    this.direction = "right"    
+                }
+ 
+                if(this.x == 1560 && this.direction == "right"){
+                    this.direction = "up"  
+                }
+ 
+                if(this.y == 0 && this.direction == "up"){
+                    this.direction = "left"
+                }
+                // console.log(this.y)
+                // console.log(this.x)
+ 
+ 
+               
+                // if(this.x == 0){
+                //  this.direction = "right"
+                // }
+                // if(this.direction == "right"){
+                //     this.x+=10
+                // }
+                // if(this.x == 1600){
+                //  this.direction = "left"
+                // }
+ 
+ 
+               
+                //
+                // ADD YOUR WRAP LOGIC HERE
+                //
+            }
+ 
+            draw(){
+                c.drawImage(this.img, this.x, this.y, this.width, this.height);
+            }
+        }
+ 
+        var Jess = new JessClass();
+
+
+        class ShieldClass{
+             constructor(ShieldX,ShieldY){
+                 // CONSTRUCTOR CODE
+                 this.x = MR.x;
+                 this.y =  MR.y-50;
+                 this.width = 80;
+                 this.height = 40;
+                 this.bVisible = true
+
+
+                 this.img = new Image();
+                 this.img.src = "ShieldUp.png";
+ 
+                 }
+
+
+                 intersects(obj){
+                if (this.x < obj.x + obj.width &&
+                    this.x + this.width > obj.x &&
+                    this.y < obj.y + obj.height &&
+                    this.y + this.height > obj.y)
+                {
+                    return true;
+                }
+                else{
+                    return false;
+                }
+            }
+
+
+
+
+
+
+                 moveLeft2(){
+                     this.x = MR.x-50
+                     this.y = MR.y +50
+
+
+                 }
+
+
+                 moveRight2(){
+                    this.x = MR.x+50
+                     this.y = MR.y +50
+
+
+                    }
+
+
+                    moveUp2(){
+                        this.x = MR.x;
+                 this.y =  MR.y-50;
+
+
+                        }
+
+
+                        moveDown2(){
+                            this.x = MR.x+20;
+                 this.y =  MR.y+100;
+
+
+
+
+}
+           
+ 
+            draw(){
+                c.drawImage(this.img, this.x, this.y, this.width, this.height);
+            }
+        }
+ 
+         var Shied = new ShieldClass();
+         
+
+
+        //  class funnyClass{
+        //      constructor(){
+        //          // CONSTRUCTOR CODE
+        //          this.width = cWidth;
+        //          this.height = cHeight;
+        //          this.bVisible = false
+
+
+        //          this.img = new Image();
+        //          this.img.src = "HAHA.png";
+ 
+        //          }
+           
+ 
+        //     draw(){
+        //         c.drawImage(this.img, this.x, this.y, this.width, this.height);
+        //     }
+        // }
+ 
+        //  var HAHA = new funnyClass();
+//
+         //if you don't move this will killl you
+         class MoveClass{
+             constructor(){
+                 this.x=10
+                 this.y=800
+                 // CONSTRUCTOR CODE
+                 this.width = 30;
+                 this.height = 40;
+                 this.bVisible = true
+
+
+                 this.img = new Image();
+                 this.img.src = "HAHA.jpg";
+ 
+                 }
+            intersects(obj){
+                if (this.x < obj.x + obj.width &&
+                    this.x + this.width > obj.x &&
+                    this.y < obj.y + obj.height &&
+                    this.y + this.height > obj.y)
+                {
+                    return true;
+                }
+                else{
+                    return false;
+                }
+            }
+
+
+             update(){
+               
+        if(this.intersects(MR))
+            {
+                console.log("E")
+                //reset the position of the pebble
+                //if we do not, and use a timer to bring the pig back,
+                //the pebble is still where the pig is located
+               
+                lives -=10
+               
+            }
+        }
+ 
+            draw(){
+                c.drawImage(this.img, this.x, this.y, this.width, this.height);
+            }
+
+
+           
+        }
+ 
+         var IDONTSEEENOUGHMOVEMENT = new MoveClass();
+
+
+         class MoveClass2{
+             constructor(){
+                 this.x=1560
+                 this.y=800
+                 // CONSTRUCTOR CODE
+                 this.width = 30;
+                 this.height = 40;
+                 this.bVisible = true
+
+
+                 this.img = new Image();
+                 this.img.src = "HAHA.jpg";
+ 
+                 }
+
+
+                 intersects(obj){
+                if (this.x < obj.x + obj.width &&
+                    this.x + this.width > obj.x &&
+                    this.y < obj.y + obj.height &&
+                    this.y + this.height > obj.y)
+                {
+                    return true;
+                }
+                else{
+                    return false;
+                }
+            }
+
+
+                 update(){
+                   
+               
+                if(this.intersects(MR))
+                            {
+                                this.bVisible = false;
+                               
+                                //reset the position of the pebble
+                                //if we do not, and use a timer to bring the pig back,
+                                //the pebble is still where the pig is located
+                               
+                                lives -=10
+                            }
+                            }
+           
+ 
+            draw(){
+                c.drawImage(this.img, this.x, this.y, this.width, this.height);
+            }
+
+
+           
+        }
+
+
+        var MOVEIT = new MoveClass2();
+
+
+
+
+       
+ 
+ 
+        // Canvas context; used to call Canvas methods
+        var c;
+
+
+        var Pjk = 0
+
+
+        var lives = 10
+       
+
+
+        var gameState = "intro";
+
+
+        var sndCymbal = new Audio("Cherro.m4a")
+
+
+        var Kate = new Audio("Kate.m4a")
+
+
+        var Fnaf = new Audio("Fnaf.mp3")
+
+
+        var a = new Audio("Speech.mp3");
+
+
+        var AHH = new Audio("AH.mp3")
+
+
+        var Max = new Audio("Max.mp3")
+
+
+        var PEW = new Audio("PEWPEW.mp3")
+       
+        var Anime = new Audio("LAUGH.mp3")
+
+
+        var Jack = new Audio("Jack.mp3")
+
+
+        var Isha = new Audio("Isha.MOV")
+ 
+        // Canvas width and height.
+        var cWidth, cHeight;
+
+
+        var RickLeft = 0
+
+
+        var RickRight = 0
+
+
+        var once = 0
+ 
+        // Stores the current keyboard state
+        var curkeys = [];
+       
+        // Stores keys that have been newly pressed since last update
+        var newkeys = [];
+ 
+ 
+ 
+        // Initializes entire game framework. This method should only be called
+        // once, by the body onload event handler.
+        function gameFrameworkInit(){  
+               
+            // Initialize key arrays
+            for (i = 0; i < 256; i++){
+                curkeys[i] = false;
+                newkeys[i] = false;
+            }
+       
+            // Initialize global variables for canvas
+            c = myCanvas.getContext('2d');
+            cWidth = myCanvas.width;
+            cHeight = myCanvas.height;
+ 
+ 
+            // Start listeners for getting keyboard state
+            window.addEventListener('keydown',
+                                     function(e){
+                                        if (!curkeys[e.keyCode]){
+                                            curkeys[e.keyCode] = true;
+                                            newkeys[e.keyCode] = true;
+                                        }
+                                     }
+                                   );
+           
+            window.addEventListener('keyup',
+                                     function(e){ curkeys[e.keyCode] = false; }
+                                   );
+ 
+            // Schedule the update function to be called right before the next repaint.
+            // (At the end of the update function, it will schedule itself to be called
+            // again before the NEXT repaint, and so on.
+            window.requestAnimationFrame(gameUpdate);
+        }
+       
+        //create a variable to remembrs the index in the array
+        //that we are currently at
+        var pebbleDone = 0
+        var pebbleDone2 = 0
+ 
+        //initilize our array of pebbles
+        var pebbleArray = [];
+        var pebbleArray2 = [];
+ 
+        //fill the pebble array with pebbles
+        for(i= 0; i<60; i++){
+            pebbleArray[i] = new pebbleClass(0,0)
+        }
+        for(i= 0; i<105; i++){
+            pebbleArray2[i] = new pebbleClass2(0,0)
+        }
+
+
+       
+       
+ 
+ 
+ 
+ 
+        function gameUpdate(){
+
+
+            if(gameState == "play"){
+                lives = 10
+
+
+               
+                if(RickLeft==0){
+                    IDONTSEEENOUGHMOVEMENT.x+=0.3
+
+
+                }
+                if(RickRight==0){
+                    MOVEIT.x-=0.3
+                }
+               
+                if(Rick.y <= -400){
+                    gameState = "Intro2"
+                }
+                //console.log(Rick.y)
+                if(Shied.bVisible==true && Pjk == 0){
+                    Shied.x = MR.x
+                    Shied.y =  MR.y-50
+                }
+           
+                if(curkeys[[65]]){
+                MR.moveLeft()
+                RickLeft = 1
+                }
+                if(!curkeys[65]){
+                    RickLeft = 0
+                }
+ 
+                if(curkeys[[68]]){
+                    MR.moveRight()
+                    RickRight = 1
+ 
+                }
+
+
+                if(!curkeys[[68]]){
+                    RickRight = 0
+ 
+                }
+
+
+                if(curkeys[[37]]){
+                    Shied.moveLeft2()
+                    Pjk = 255
+                    Shied.img.src = "SheildLeft.png";
+ 
+                }
+
+
+                if(curkeys[[39]]){
+                    Shied.moveRight2()
+                    Pjk = 256
+                    Shied.img.src = "ShieldRight.png";
+ 
+                }
+
+
+                if(curkeys[[38]]){
+                    Shied.moveUp2()
+                    Pjk = 257
+                    Shied.img.src = "ShieldUp.png";
+ 
+                }
+
+
+                if(curkeys[[40]]){
+                    Shied.moveDown2()
+                    Pjk = 258
+                    Shied.img.src = "ShieldDown.png";
+ 
+                }
+
+
+                if(Pjk==255){
+                    Shied.x = MR.x-50
+                    Shied.y = MR.y +50
+                }
+
+
+                if(Pjk==256){
+                    Shied.x = MR.x+50
+                    Shied.y = MR.y +50
+                }
+
+
+                if(Pjk==257){
+                    Shied.x = MR.x;
+                    Shied.y =  MR.y-50;
+
+
+                }
+
+
+                if(Pjk==258){
+                    Shied.x = MR.x+20;
+                    Shied.y =  MR.y+100;
+
+
+                }
+           
+                for(var i = 0; i<60; i++){
+                    pebbleArray[i].update()
+                }
+                for(var i = 0; i<105; i++){
+                    pebbleArray2[i].update()
+                }
+ 
+                var Another = 0
+                if(newkeys[32]){
+                    Another = 1
+                }
+                if(!newkeys[32]){
+                    Another = 0
+                }
+                if (newkeys[32]){       // ENTER
+                // if (pebble1.bVisible == false){
+                //  pebble1.x = bird.x + 90;
+                //  pebble1.y = bird.y + 50;
+                //  pebble1.bVisible = true;                    
+                // }
+                // else if (pebble2.bVisible == false){
+                //  pebble2.x = bird.x + 90;
+                //  pebble2.y = bird.y + 50;
+                //  pebble2.bVisible = true;                    
+                // }
+ 
+                //code for using the array of pebbles
+                    for(var i = 0; i<52; i++){
+                        //only allow pebbles to be fired if visible
+                        if(pebbleArray[pebbleDone].bVisible == false){
+                            pebbleArray[pebbleDone].x = MR.x + 80;
+                            pebbleArray[pebbleDone].y = MR.y +30;
+                            pebbleArray[pebbleDone].bVisible = true;
+                       
+                        }
+                    }
+                pebbleDone++
+            }
+            if(Another==1){
+                for(var i = 0; i<10; i++){
+                //only allow pebbles to be fired if visible
+                if(pebbleArray2[pebbleDone2].bVisible == false){
+                pebbleArray2[pebbleDone2].x = Alvin.x + 80;
+                pebbleArray2[pebbleDone2].y = Alvin.y +30;
+                pebbleArray2[pebbleDone2].bVisible = true;
+            }
+
+
+            if(pebbleArray2[pebbleDone2].bVisible == false){
+                pebbleArray2[pebbleDone2].x = Jess.x + 80;
+                pebbleArray2[pebbleDone2].y = Jess.y +30;
+                pebbleArray2[pebbleDone2].bVisible = true;
+            }
+        }
+        pebbleDone2++
+        //console.log(pebbleDone)
+        }
+
+
+            if(Another==1){
+for(var i = 0; i<10; i++){
+
+
+    if(pebbleArray2[pebbleDone2].bVisible == false){
+        pebbleArray2[pebbleDone2].x = Jess.x + 80;
+        pebbleArray2[pebbleDone2].y = Jess.y +30;
+        pebbleArray2[pebbleDone2].bVisible = true;
+        PEW.play()
+    }
+}
+pebbleDone2++
+console.log(pebbleDone)
+}
+
+
+
+
+if(pebbleDone==60){
+pebbleDone = 0
+}
+if(pebbleDone2==10){
+pebbleDone2 = 0
+}
+once = 1
+
+
+// if(lives <= 0){
+//     gameState = "lose"
+// }
+
+
+
+
+
+
+
+
+Rick.move()
+Alvin.move()
+Jess.move()
+
+
+IDONTSEEENOUGHMOVEMENT.update()
+MOVEIT.update()
+
+
+}
+
+
+if(gameState == "round2"){
+    IDONTSEEENOUGHMOVEMENT.x=10
+    MOVEIT.x=1560
+
+
+    if(once==1){
+       Rick.y = 120
+    }
+
+
+    once = 0
+   
+                if(RickLeft==0){
+                    IDONTSEEENOUGHMOVEMENT.x+=10
+                    MOVEIT.x-=0.5
+
+
+                }
+                if(RickRight==0){
+                    IDONTSEEENOUGHMOVEMENT.x+=10
+                    MOVEIT.x-=0.5
+                }
+               
+                if(Rick.y <= -400){
+                    gameState = "Win"
+                    Isha.play()
+                }
+                //console.log(Rick.y)
+                if(Shied.bVisible==true && Pjk == 0){
+                    Shied.x = MR.x
+                    Shied.y =  MR.y-50
+                }
+           
+                if(curkeys[[65]]){
+                MR.moveLeft()
+                RickLeft = 1
+                }
+                if(!curkeys[65]){
+                    RickLeft = 0
+                }
+ 
+                if(curkeys[[68]]){
+                    MR.moveRight()
+                    RickRight = 1
+ 
+                }
+
+
+                if(!curkeys[[68]]){
+                    RickRight = 0
+ 
+                }
+
+
+                if(curkeys[[37]]){
+                    Shied.moveLeft2()
+                    Pjk = 255
+                    Shied.img.src = "SheildLeft.png";
+ 
+                }
+
+
+                if(curkeys[[39]]){
+                    Shied.moveRight2()
+                    Pjk = 256
+                    Shied.img.src = "ShieldRight.png";
+ 
+                }
+
+
+                if(curkeys[[38]]){
+                    Shied.moveUp2()
+                    Pjk = 257
+                    Shied.img.src = "ShieldUp.png";
+ 
+                }
+
+
+                if(curkeys[[40]]){
+                    Shied.moveDown2()
+                    Pjk = 258
+                    Shied.img.src = "ShieldDown.png";
+ 
+                }
+
+
+                if(Pjk==255){
+                    Shied.x = MR.x-50
+                    Shied.y = MR.y +50
+                }
+
+
+                if(Pjk==256){
+                    Shied.x = MR.x+50
+                    Shied.y = MR.y +50
+                }
+
+
+                if(Pjk==257){
+                    Shied.x = MR.x;
+                    Shied.y =  MR.y-50;
+
+
+                }
+
+
+                if(Pjk==258){
+                    Shied.x = MR.x+20;
+                    Shied.y =  MR.y+100;
+
+
+                }
+           
+                for(var i = 0; i<60; i++){
+                    pebbleArray[i].update()
+                }
+                for(var i = 0; i<105; i++){
+                    pebbleArray2[i].update()
+                }
+ 
+                var Another = 0
+                if(newkeys[32]){
+                    Another = 1
+                }
+                if(!newkeys[32]){
+                    Another = 0
+                }
+                if (newkeys[32]){       // ENTER
+                // if (pebble1.bVisible == false){
+                //  pebble1.x = bird.x + 90;
+                //  pebble1.y = bird.y + 50;
+                //  pebble1.bVisible = true;                    
+                // }
+                // else if (pebble2.bVisible == false){
+                //  pebble2.x = bird.x + 90;
+                //  pebble2.y = bird.y + 50;
+                //  pebble2.bVisible = true;                    
+                // }
+ 
+                //code for using the array of pebbles
+                    for(var i = 0; i<52; i++){
+                        //only allow pebbles to be fired if visible
+                        if(pebbleArray[pebbleDone].bVisible == false){
+                            pebbleArray[pebbleDone].x = MR.x + 80;
+                            pebbleArray[pebbleDone].y = MR.y +30;
+                            pebbleArray[pebbleDone].bVisible = true;
+                       
+                        }
+                    }
+                pebbleDone++
+            }
+            if(Another==1){
+                for(var i = 0; i<1; i++){
+                //only allow pebbles to be fired if visible
+                if(pebbleArray2[pebbleDone2].bVisible == false){
+                pebbleArray2[pebbleDone2].x = Alvin.x + 80;
+                pebbleArray2[pebbleDone2].y = Alvin.y +30;
+                pebbleArray2[pebbleDone2].bVisible = true;
+            }
+
+
+            if(pebbleArray2[pebbleDone2].bVisible == false){
+                pebbleArray2[pebbleDone2].x = Jess.x + 80;
+                pebbleArray2[pebbleDone2].y = Jess.y +30;
+                pebbleArray2[pebbleDone2].bVisible = true;
+            }
+        }
+        pebbleDone2++
+        //console.log(pebbleDone)
+        }
+
+
+            if(Another==1){
+for(var i = 0; i<2; i++){
+
+
+    if(pebbleArray2[pebbleDone2].bVisible == false){
+        pebbleArray2[pebbleDone2].x = Jess.x + 80;
+        pebbleArray2[pebbleDone2].y = Jess.y +30;
+        pebbleArray2[pebbleDone2].bVisible = true;
+        PEW.play()
+    }
+}
+pebbleDone2++
+console.log(pebbleDone)
+}
+
+
+
+
+if(pebbleDone==60){
+pebbleDone = 0
+}
+if(pebbleDone2==2){
+pebbleDone2 = 0
+}
+
+
+if(lives <= 0){
+    gameState = "lose"
+}
+
+
+
+
+
+
+
+
+Rick.move()
+Alvin.move()
+Jess.move()
+
+
+ IDONTSEEENOUGHMOVEMENT.update()
+ MOVEIT.update()
+// MOVEIT.update()
+
+
+}
+           
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+            // DO NOT ADD OR MODIFY ANY CODE BELOW HERE
+            // Reset newkeys
+            for (i = 0; i < 256; i++){
+                newkeys[i] = false;
+            }
+           
+            // At the end of the update function, repaint the screen
+            gameDraw();
+               
+            // Last thing the update function does is to schedule itself to be called
+            // again before the next repaint
+            window.requestAnimationFrame(gameUpdate);
+        }
+ 
+ 
+        function gameDraw(){
+
+
+            var bg = new Image();
+            bg.src = "background.png";
+            c.font = "30px Arial"
+
+
+            if(gameState == "intro"){
+            bg.src = "background.png";
+            c.drawImage(bg, 0, 0, 1600, 900);
+        }
+        if(gameState == "play"){
+            bg.src = "background.png";
+            c.drawImage(bg, 0, 0, 1600, 900);
+        }
+        if(gameState == "credits"){
+            bg.src = "background.png";
+            c.drawImage(bg, 0, 0, 1600, 900);
+        }
+        if(gameState == "intro2"){
+            bg.src = "background2.png";
+            c.drawImage(bg, 0, 0, 1600, 900);
+        }
+        if(gameState == "round2"){
+            bg.src = "background2.png";
+            c.drawImage(bg, 0, 0, 1600, 900);
+        }
+        if(gameState == "win"){
+            bg.src = "background2.png";
+            c.drawImage(bg, 0, 0, 1600, 900);
+        }
+
+
+        if(gameState == "lose"){
+            bg.src = "background2.png";
+            c.drawImage(bg, 0, 0, 1600, 900);
+        }
+           
+           
+            // Clear the canvas before we draw the current frame
+            c.clearRect(0,0,cWidth,cHeight);
+ 
+            c.drawImage(bg, 0, 0, 1600, 900);
+
+
+
+
+
+
+           
+            c.fillText ("Lives: "+lives,0,20,200)
+
+
+            if(gameState == "Win"){
+                Isha.play()
+                c.fillText ("IMPOSSIBLE",1000,30,600)
+                if(curkeys[[13]]){
+                    location.reload()
+
+
+                //    calledDown = true
+
+
+                }
+
+
+            }
+
+
+            if(gameState == "Intro2"){
+                Jack.play()
+                Anime.play()
+               
+
+
+                if(curkeys[[13]]){
+                gameState="round2"
+
+
+                //    calledDown = true
+
+
+                }
+               
+
+
+            }
+
+
+            if(gameState == "round2"){
+            bg.src = "background2.png";
+
+
+            }
+
+
+
+
+           
+ 
+            if(gameState == "lose"){
+                c.fillText ("Master C. lost to Rick Asley(as he should).",1000,30,600)
+                    a.play();
+                    if(curkeys[[13]]){
+                        location.reload()
+                       
+
+
+                }
+            }
+
+
+            if(gameState == "intro"){
+                console.log(gameState)
+                c.fillText ("This is a game about Comp sci. Master C. is trying to beat Rick Astley.",1000,30,600)
+                c.fillText ("You have to shoot Rick Astley to the top while not getting hit by Rick Astkey's bodyguards",1000,70,600)
+                c.fillText ("You shoot with space bar and move the sheild with the arrow keys.",1000,100,600)
+                c.fillText ("WARNING! WARNING! BEEP! BOOP! when you shoot, the body guards will also shoot",1000,130,600)
+                c.fillText ("GOOD LUCK!!!(You're not going to win MUHAHAHAHHHA)",1000,160,600)
+                c.fillText ("Freddy likes watching you move it move it, if you don't move it move it he will kill you :)",1000,190,600)
+                if(curkeys[[13]]){
+                gameState="play"
+                }
+                if(curkeys[[16]]){
+                gameState="credits"
+                }
+            }
+
+
+                if(gameState == "credits"){
+                    lives = "some cool people"
+                c.fillText ("𝕮𝕽𝕰𝕯𝕴𝕿𝕾",1000,30,600)
+                c.fillText ("Thank you to...",1000,70,600)
+                c.fillText ("Katherine Schillinger",1000,100,600)
+                c.fillText ("Jessica Moretti(voice actor and Rick Astley's bodyguard)",1000,130,600)
+                c.fillText ("Isha Kaushik(she's mad cool dawg)",1000,160,600)
+                c.fillText ("Rick Astley(our lord)",1000,190,600)
+                c.fillText ("Oktavia Nowikowski(she moved)",1000,340,600)
+                c.fillText ("Chris Wagner(White Sox are the best!)",1000,310,600)
+                c.fillText ("Maximiliano Tellez Faias(He exists)",1000,250,600)
+                c.fillText ("Patrick Vozas(Cubs are the best!)",1000,280,600)
+                c.fillText ("Joshua George(he's here too)",1000,220,600)
+                c.fillText ("Maximiliano Tellez Faias(He exists)",1000,250,600)
+                c.fillText ("Master C(I think Alvin should get an A on this project-Mr C)",1000,800,600)
+                if(curkeys[[13]]){
+                gameState="play"
+                }
+
+
+            }
+
+
+
+
+           
+ 
+            MR.draw();
+            Rick.draw()
+            Alvin.draw()
+            Jess.draw()
+            Shied.draw()
+             IDONTSEEENOUGHMOVEMENT.draw()
+            MOVEIT.draw()
+            for(var i = 0; i<52; i++){
+                pebbleArray[i].draw()
+            }
+            for(var i = 0; i<10; i++){
+                pebbleArray2[i].draw()
+            }
+ 
+           
+        }
+ 
+ 
+    </script>
+ 
+</head>
+ 
+ 
+<body onload="gameFrameworkInit()">
+   
+    <canvas id="myCanvas" width="1600" height="900"></canvas>
+ 
+</body>
+ 
+ 
+</html>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+        class ShieldClass{
+             constructor(ShieldX,ShieldY){
+                 // CONSTRUCTOR CODE
+                 this.x = MR.x;
+                 this.y =  MR.y-50;
+                 this.width = 80;
+                 this.height = 40;
+                 this.bVisible = true
+
+
+                 this.img = new Image();
+                 this.img.src = "ShieldUp.png";
+ 
+                 }
+
+
+                 intersects(obj){
+                if (this.x < obj.x + obj.width &&
+                    this.x + this.width > obj.x &&
+                    this.y < obj.y + obj.height &&
+                    this.y + this.height > obj.y)
+                {
+                    return true;
+                }
+                else{
+                    return false;
+                }
+            }
+
+
+
+
+
+
+                 moveLeft2(){
+                     this.x = MR.x-50
+                     this.y = MR.y +50
+
+
+                 }
+
+
+                 moveRight2(){
+                    this.x = MR.x+50
+                     this.y = MR.y +50
+
+
+                    }
+
+
+                    moveUp2(){
+                        this.x = MR.x;
+                 this.y =  MR.y-50;
+
+
+                        }
+
+
+                        moveDown2(){
+                            this.x = MR.x+20;
+                 this.y =  MR.y+100;
+
+
+
+
+}
+           
+ 
+            draw(){
+                c.drawImage(this.img, this.x, this.y, this.width, this.height);
+            }
+        }
+ 
+         var Shied = new ShieldClass();
+
+
+
+
+
+
+
+                if(curkeys[[37]]){
+                    Shied.moveLeft2()
+                    Pjk = 255
+                    Shied.img.src = "SheildLeft.png";
+ 
+                }
+
+
+                if(curkeys[[39]]){
+                    Shied.moveRight2()
+                    Pjk = 256
+                    Shied.img.src = "ShieldRight.png";
+ 
+                }
+
+
+                if(curkeys[[38]]){
+                    Shied.moveUp2()
+                    Pjk = 257
+                    Shied.img.src = "ShieldUp.png";
+ 
+                }
+
+
+                if(curkeys[[40]]){
+                    Shied.moveDown2()
+                    Pjk = 258
+                    Shied.img.src = "ShieldDown.png";
+ 
+                }
+
